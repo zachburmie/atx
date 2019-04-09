@@ -20,7 +20,12 @@ else
   prefix="$(dirname "$0")/.."
 fi
 
-current=$AWS_OKTA_PROFILE
+if [ -z "${AWS_OKTA_PROFILE-}" ]; then
+  current=$(aws-okta list | awk 'NR==2{print $1}')
+else
+  current=$AWS_OKTA_PROFILE
+fi
+
 selected=$( (aws-okta list | awk '{print $1}'; echo "${current}")  \
             | fzf -0 -1 --tac -q "${1:-""}" --prompt "$current> " --preview "$prefix/helpers/atx-preview.sh {}")
 if [ ! -z "$selected" ]; then

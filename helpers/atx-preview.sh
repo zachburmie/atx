@@ -1,11 +1,11 @@
 #!/bin/sh
-# ktx preview window helper
+# atx preview window helper
 
 set -eu
 
 selected=$1
 
-context=$(aws-okta list | awk '{ for(i=NF; i>=1; --i){ if($1 == "'${selected}'"){print $i}}}' | tr '\r\n' ' ')
+context=$(aws-okta list | awk '{ for(i=1; i<=NF; i++){ if($1 == "'${selected}'"){print $i}}}' | tr '\r\n' ' ')
 profile=$(echo "${context}" | awk '{print $1}')
 arn=$(echo "${context}" | awk '{print $2}')
 source=$(echo "${context}" | awk '{print $3}')
