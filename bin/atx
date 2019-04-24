@@ -29,5 +29,5 @@ fi
 selected=$( (aws-okta list | awk '{print $1}'; echo "${current}")  \
             | fzf -0 -1 --tac -q "${1:-""}" --prompt "$current> " --preview "$prefix/helpers/atx-preview.sh {}")
 if [ ! -z "$selected" ]; then
-  aws-okta exec "${selected}" -- bash
+  aws-okta exec "${selected}" -- $SHELL
 fi
